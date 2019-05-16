@@ -8,6 +8,6 @@ int main(){
 
     while(t--){
         cin >> row >> col;
-        cout << floor(row/3) * floor(col/3);
+        cout << floor(row/3) * floor(col/3) << endl;
     }
 }
