@@ -26,7 +26,7 @@ class carCompare{
     public:
         // Method to overload ()
         bool operator()(car a, car b){
-            return a.dis2_from_O() > b.dis2_from_O();
+            return a.dis2_from_O() > b.dis2_from_O(); // FOR MIN HEAP
         }
 };
 
