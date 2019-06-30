@@ -92,6 +92,22 @@ public:
             cout << "Distance of " << node << " from " << src << " = " << dist[node] << endl;
         }
     }
+
+    void dfs_implement(T src, map<T,bool> visited){
+        cout << src << ",";
+        visited[src] = true;
+
+        for(auto neighbour: adjList[src]){
+            if(!visited[neighbour]){
+                dfs_implement(neighbour, visited);
+            }
+        }
+    }
+
+    void dfs(T src){
+        map<T, bool> visited;
+        dfs_implement(src, visited);
+    }
 };
 
 int main(){
@@ -115,4 +131,8 @@ int main(){
     cout << "\n\n\n";
 
     g.bfs_with_distance("Plants");
+
+    cout << "\n\n\n";
+
+    g.dfs("Plants");
 }
