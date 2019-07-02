@@ -33,6 +33,52 @@ public:
         }
     }
 
+
+    void bfsTopologicalSort(){
+        queue<T> q;
+        map<T,bool> visited;
+        map<T, int> indegree;
+
+        for(auto i:adjList){
+            T node = i.first;
+            visited[node] = false;
+            indegree[node] = 0;
+        }
+
+        // Calculate indegree of all nodes
+        for(auto i:adjList){
+            T u = i.first;
+
+            for(auto neighbour:adjList[u]){
+                indegree[neighbour]++;
+            }
+        }
+
+        // Find nodes with indegree = 0
+        for(auto i:adjList){
+            T node = i.first;
+            if(indegree[node]==0){
+                q.push(node);
+            }
+        }
+
+        // Starting of the algorithm
+        while(!q.empty()){
+            T node = q.front();
+            q.pop();
+
+            cout << node << " -> ";
+
+            for(auto neighbour:adjList[node]){
+                indegree[neighbour]--;
+
+                if(indegree[neighbour] == 0){
+                    q.push(neighbour);
+                }
+            }
+        }
+    }
+
     // DONOT Forget to Pass map and list by reference
     // DON'T PASS BY VALUE
     void dfs_implement(T node, map<T,bool> &visited, list<T> &ordering){
@@ -77,5 +123,7 @@ int main(){
 
     g.dfsTopologicalSort();
 
+    cout << "\n\n";
 
+    g.bfsTopologicalSort();
 }
