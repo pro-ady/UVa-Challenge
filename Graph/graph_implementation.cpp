@@ -107,6 +107,21 @@ public:
     void dfs(T src){
         map<T, bool> visited;
         dfs_implement(src, visited);
+
+        cout << endl;
+
+        // Looking for Graph not connected to the initial tree;
+        // i.e. Traversing Entire Forest
+        int count_components = 1;
+        for(auto i:adjList){
+            T node = i.first;
+            if(!visited[node]){
+                dfs_implement(node, visited);
+                count_components++;
+            }
+        }
+
+        cout << "Graph has " << count_components << " components" << endl;
     }
 };
 
