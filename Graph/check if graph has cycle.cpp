@@ -62,6 +62,39 @@ public:
 
         return false;
     }
+
+    bool isCyclicDFS_implement(T node, map<T,bool> &visited, map<T,bool> &inStack){
+        visited[node] = true;
+        inStack[node] = true;
+
+        // Goto its neighbours/children
+        for(auto neighbour:adjList[node]){
+            if(visited[neighbour]==false && isCyclicDFS_implement(neighbour, visited, inStack)){
+                return true;
+            }
+
+            else if(inStack[neighbour])
+                return true;
+        }
+
+        return false;
+    }
+
+    bool isCyclicDFS(T src){
+        map<T,bool> visited;
+        map<T,bool> inStack;
+
+        for(auto i:adjList){
+            T node = i.first;
+
+            if(!visited[node]){
+                return isCyclicDFS_implement(node, visited, inStack);
+            }
+        }
+
+        return false;
+    }
+
 };
 
 int main(){
@@ -72,6 +105,5 @@ int main(){
     g.addEdge(2,3);
     g.addEdge(3,1);
 
-    cout << g.isCyclicBFS(1);
+    cout << g.isCyclicBFS(1) << "\n" << g.isCyclicDFS(1);
 }
-
