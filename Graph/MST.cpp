@@ -18,6 +18,32 @@ void union_parent(int x, int y){
     parent[find(y)] = find(x);
 }
 
+// UNION - FIND DS with rank and path compression
+map<int, int> rank_node;
+
+int find2(int x){
+    if(parent[x] == -1){
+        return x;
+    }
+
+    return find(parent[x]);
+}
+
+int union_parent_2(int x, int y){
+    int parent_x = find2(x);
+    int parent_y = find2(y);
+
+    if(rank_node[x] >= rank_node[y]){
+        rank_node[x]++;
+        parent[parent_y] = parent_x;
+    }
+
+    else{
+        rank_node[y]++;
+        parent[parent_x] = parent_y;
+    }
+}
+
 class graph{
     // List of Edges
     vector<pair<int, pair<int,int>>> edges;
@@ -49,7 +75,7 @@ public:
             // Check if including the edge v->w creates a cycle
             // i.e. if v,w are in different trees
             if(find(v) != find(w)){
-                union_parent(v,w);
+                union_parent_2(v,w);
 
                 mst_weight += weight;
 
